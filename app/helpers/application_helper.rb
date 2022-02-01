@@ -8,6 +8,10 @@ module ApplicationHelper
     "У Вас #{question_counter} #{inclination(question_counter)}"
   end
 
+  def fa_icon(icon_class)
+    content_tag 'span', '', class: "fa fa-#{icon_class}"
+  end
+
   private
 
   def inclination(number)
