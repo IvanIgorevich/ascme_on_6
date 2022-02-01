@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :email, format: { with: /\A\w+@\w+\.\w+/ }
   validates :username, length: { maximum: 40 }
   validates :username, format: { with: /\A\w+\z/,
-                                 message: "Недопустимый формат username, можно только латинские буквы, цифры, и знак '_'" }
+                                 message: "- недопустимый формат, можно только латинские буквы, цифры, и знак '_'" }
 
   attr_accessor :password
 
