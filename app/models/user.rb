@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :questions
 
   before_save :encrypt_password
-  before_validation :username_downcase
+  before_validation :username_email_downcase
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
@@ -20,18 +20,6 @@ class User < ApplicationRecord
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
-
-  def encrypt_password
-    if password.present?
-      self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
-
-      self.password_hash = User.hash_to_string(
-        OpenSSL::PKCS5.pbkdf2_hmac(
-          password, password_salt, ITERATIONS, DIGEST.length, DIGEST
-        )
-      )
-    end
-  end
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
@@ -55,7 +43,19 @@ class User < ApplicationRecord
 
   private
 
-  def username_downcase
-    username.downcase!
+  def encrypt_password
+    if password.present?
+      self.password_salt = User.hash_to_string(OpenSSL::Random.random_bytes(16))
+
+      self.password_hash = User.hash_to_string(
+        OpenSSL::PKCS5.pbkdf2_hmac(
+          password, password_salt, ITERATIONS, DIGEST.length, DIGEST
+        )
+      )
+    end
+  end
+
+  def username_email_downcase
+    username.downcase! && email.downcase!
   end
 end
