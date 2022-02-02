@@ -4,10 +4,12 @@ class User < ApplicationRecord
   ITERATIONS = 20_000
   DIGEST = OpenSSL::Digest::SHA256.new
 
+  attr_accessor :password
+
   has_many :questions
 
   before_save :encrypt_password
-  before_validation :username_email_downcase
+  before_save :username_email_downcase
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
@@ -15,9 +17,6 @@ class User < ApplicationRecord
   validates :username, length: { maximum: 40 }
   validates :username, format: { with: /\A\w+\z/,
                                  message: "- недопустимый формат, можно только латинские буквы, цифры, и знак '_'" }
-
-  attr_accessor :password
-
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
 
@@ -56,6 +55,7 @@ class User < ApplicationRecord
   end
 
   def username_email_downcase
-    username.downcase! && email.downcase!
+    username.try(:downcase!)
+    email.try(:downcase!)
   end
 end
