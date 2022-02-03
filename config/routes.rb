@@ -9,4 +9,5 @@ Rails.application.routes.draw do
   get 'log_out' => 'sessions#destroy'
   get 'log_in' => 'sessions#new'
   get 'show' => 'users#show'
+  get 'to_come_in' => 'sessions#create'
 end

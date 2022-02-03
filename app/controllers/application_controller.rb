@@ -10,4 +10,8 @@ class ApplicationController < ActionController::Base
   def reject_user
     redirect_to root_path, alert: 'Недоступно'
   end
+
+  def log_in(user)
+    session[:user_id] = user.id
+  end
 end
