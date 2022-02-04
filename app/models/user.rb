@@ -9,14 +9,13 @@ class User < ApplicationRecord
   has_many :questions
 
   before_save :encrypt_password
-  before_save :username_email_downcase
+  before_validation :username_email_downcase
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
   validates :email, format: { with: /\A\w+@\w+\.\w+/ }
   validates :username, length: { maximum: 40 }
-  validates :username, format: { with: /\A\w+\z/,
-                                 message: "- недопустимый формат, можно только латинские буквы, цифры, и знак '_'" }
+  validates :username, format: { with: /\A\w+\z/ }
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
 
@@ -25,9 +24,10 @@ class User < ApplicationRecord
   end
 
   def self.authenticate(email, password)
+    email&.downcase!
     user = find_by(email: email)
 
-    return nil unless user.present?
+    return unless user.present?
 
     hashed_password = User.hash_to_string(
       OpenSSL::PKCS5.pbkdf2_hmac(
@@ -36,8 +36,6 @@ class User < ApplicationRecord
     )
 
     return user if user.password_hash == hashed_password
-
-    nil
   end
 
   private
@@ -55,7 +53,7 @@ class User < ApplicationRecord
   end
 
   def username_email_downcase
-    username.try(:downcase!)
-    email.try(:downcase!)
+    username&.downcase!
+    email&.downcase!
   end
 end
