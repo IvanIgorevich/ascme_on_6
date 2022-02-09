@@ -47,8 +47,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.questions.each { |question| question.destroy }
     @user.destroy
+    session[:user_id] = nil
     redirect_to root_path, notice: 'Пользователь удален'
   end
 
