@@ -7,15 +7,15 @@ module ApplicationHelper
     content_tag 'span', '', class: "fa fa-#{icon_class}"
   end
 
-  def inclination(number)
-    return  'ов' if (11..14).include?(number % 100)
+  def inclination(number, word1, word2, word5)
+    return  word5 if (11..14).include?(number % 100)
 
     last_digit = number % 10
 
-    return  '' if last_digit == 1
+    return  word1 if last_digit == 1
 
-    return  'а' if (2..4).include?(last_digit)
+    return  word2 if (2..4).include?(last_digit)
 
-    'ов'
+    word5
   end
 end
