@@ -18,6 +18,7 @@ class User < ApplicationRecord
   validates :username, format: { with: /\A\w+\z/ }
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
+  validates :color, format: { with: /\A\#[a-f0-9]{6}\b/ }, on: :update
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]
