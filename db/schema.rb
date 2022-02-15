@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2022_02_15_094718) do
     t.string "password_salt"
     t.string "avatar_url"
     t.string "color", default: "#005a55"
-    t.index ["username"], name: "index_users_on_username"
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "questions", "users"
