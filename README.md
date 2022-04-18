@@ -1,24 +1,31 @@
-# README
+# askme
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Клон приложения ASKME на rails 6.1.4 и ruby 3.0.3**
 
-Things you may want to cover:
+**Демо**
 
-* Ruby version
+https://askme-on-6.herokuapp.com/
 
-* System dependencies
+**Установка**
 
-* Configuration
+1. Скопировать/клонировать проект;
+2. Установить и настроить базу данных (в проекте по умолчанию используется SQLite)
+3. Установить NodeJS, Yarn
 
-* Database creation
+**Настройка**
 
-* Database initialization
+Установите все зависимости командой:
 
-* How to run the test suite
+`bundle install`
 
-* Services (job queues, cache servers, search engines, etc.)
+Выполните команды:
 
-* Deployment instructions
+`rails db:create db:migrate`
 
-* ...
+**Запуск приложения:**
+
+`rails server`
+
+**В браузере перейти по адресу:**
+
+`localhost:3000`
